@@ -1,6 +1,6 @@
 package com.reneuby.controllers;
 
-import com.reneuby.domain.CoefString;
+import com.reneuby.webapi.WebApiCoefficients;
 import com.reneuby.domain.Coefficients;
 import com.reneuby.domain.Equation;
 import com.reneuby.domain.Roots;
@@ -24,71 +24,52 @@ public class MainControllerTest {
 
     @Test
     public void createEquationRightParameters() {
-        //Given
-        CoefString coefficients = new CoefString();
+        WebApiCoefficients coefficients = new WebApiCoefficients();
         coefficients.setA("2");
         coefficients.setB("3");
         coefficients.setC("-9");
-        //When
         MainController mainController = new MainController(mockEquationService, validationService);
-        //calculated
         Roots roots = mainController.calculate(coefficients);
-        //right
         Roots roots1 = new Roots(1.5, -3.0);
-        //Then
         Assert.assertEquals(roots, roots1);
     }
 
     @Test
     public void createEquationWrongParameters() {
-        //Given
-        CoefString coefficients = new CoefString();
+        WebApiCoefficients coefficients = new WebApiCoefficients();
         coefficients.setA("2");
         coefficients.setB("3");
         coefficients.setC("9");
-        //When
         MainController mainController = new MainController(mockEquationService, validationService);
-        //calculated
         Roots roots = mainController.calculate(coefficients);
-        //right
         String errorMessage = "Не существует корней для данных коэффициентов";
-        //Then
         Assert.assertEquals(roots.getError(), errorMessage);
     }
 
     @Test
     public void saveEquationIfRightCoeff() {
-        //Given
-        CoefString coefficients = new CoefString();
+        WebApiCoefficients coefficients = new WebApiCoefficients();
         coefficients.setA("2");
         coefficients.setB("3");
         coefficients.setC("-9");
-        //When
         MainController mainController = new MainController(mockEquationService, validationService);
-        //calculated and save
         Roots roots = mainController.calculate(coefficients);
-        //create Equation to check
         Coefficients coeff = new Coefficients(2, 3, -9);
         Roots roots1 = new Roots(1.5, -3);
-        //check
         Mockito.verify(mockEquationService).saveEquation(new Equation(coeff, roots1));
     }
 
     @Test
     public void dontSaveEquationIfWrongCoeff() {
-        //Given
-        CoefString coefficients = new CoefString();
+        WebApiCoefficients coefficients = new WebApiCoefficients();
         coefficients.setA("2");
         coefficients.setB("3");
         coefficients.setC("9");
-        //When
         MainController mainController = new MainController(mockEquationService, validationService);
-        //calculated and save
         Roots roots = mainController.calculate(coefficients);
-        //create Equation to check
         Coefficients coeff = new Coefficients(2, 3, 9);
         Roots roots1 = new Roots(1.5, -3);
-        //check
-        Mockito.verify(mockEquationService, times(0)).saveEquation(new Equation(coeff, roots1));
+        Mockito.verify(mockEquationService, times(0))
+                .saveEquation(new Equation(coeff, roots1));
     }
 }

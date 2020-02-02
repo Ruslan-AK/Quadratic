@@ -5,7 +5,7 @@
     <spring:url value="/resources/js/myScript.js"
                 var="myScript"/>
     <meta charset="UTF-8">
-    <title>Create Client</title>
+    <title>Quadratic</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="${myScript}"></script>
 </head>
@@ -26,7 +26,7 @@
 </fieldset>
 <br>
 <fieldset>
-    <p><input id="show_list" value="Просмотреть предыдущие рассчеты" type="button"></p>
+    <p><input id="show_list_button" value="Просмотреть предыдущие рассчеты" type="button"></p>
     <div id="result_list_form"></div>
 </fieldset>
 </body>

@@ -2,50 +2,38 @@ package com.reneuby.dao.hibernate;
 
 import com.reneuby.dao.EquationDao;
 import com.reneuby.domain.Equation;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 public class EquationDaoImpl implements EquationDao {
-    private HibernateSessionFactoryUtil factory;
 
-    @Autowired
-    public EquationDaoImpl(HibernateSessionFactoryUtil factory) {
-        this.factory = factory;
-    }
+    @PersistenceContext
+    EntityManager manager;
 
-
+    @Transactional
     public long saveEquation(Equation equation) {
-        Session session = factory.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(equation);
-        tx1.commit();
-        session.close();
+        manager.persist(equation);
         return equation.getId();
     }
 
     public List<Equation> getAllEquations() {
-        List<Equation> users = (List<Equation>) factory.getSessionFactory().openSession().createQuery("From Equation ").list();
-        return users;
+        return manager.createQuery("SELECT e FROM Equation e").getResultList();
     }
 
     public void deleteEquation(long id) {
-        Session session = factory.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.delete(getEquation(id));
-        tx1.commit();
-        session.close();
+        manager.remove(getEquation(id));
     }
 
     public boolean isPresent(Equation equation) {
-        return factory.getSessionFactory().openSession().contains(equation);
+        return manager.contains(equation);
     }
 
     public Equation getEquation(long id) {
-        return factory.getSessionFactory().openSession().get(Equation.class, id);
+        return manager.find(Equation.class, id);
     }
 }

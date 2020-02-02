@@ -1,6 +1,6 @@
 package com.reneuby.validators.impl;
 
-import com.reneuby.domain.CoefString;
+import com.reneuby.webapi.WebApiCoefficients;
 import com.reneuby.domain.Coefficients;
 import com.reneuby.exceptions.BusinessException;
 import com.reneuby.validators.ValidationService;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 public class ValidationServiceImpl implements ValidationService {
 
     @Override
-    public Coefficients validateAndGetCoefficients(CoefString coefString) throws BusinessException {
-        double a = validateCoef(coefString.getA());
-        double b = validateCoef(coefString.getB());
-        double c = validateCoef(coefString.getC());
+    public Coefficients validateAndGetCoefficients(WebApiCoefficients webApiCoefficients) throws BusinessException {
+        double a = validateCoef(webApiCoefficients.getA());
+        double b = validateCoef(webApiCoefficients.getB());
+        double c = validateCoef(webApiCoefficients.getC());
         return new Coefficients(a, b, c);
     }
 

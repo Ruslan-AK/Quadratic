@@ -1,6 +1,6 @@
 package com.reneuby.controllers;
 
-import com.reneuby.domain.CoefString;
+import com.reneuby.webapi.WebApiCoefficients;
 import com.reneuby.domain.Coefficients;
 import com.reneuby.domain.Equation;
 import com.reneuby.domain.Roots;
@@ -10,10 +10,7 @@ import com.reneuby.services.EquationService;
 import com.reneuby.validators.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,18 +26,18 @@ public class MainController {
         this.validationService = validationService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping(value = "/")
     public String getPage() {
         return "index";
     }
 
-    @RequestMapping(value = "/calculate", method = RequestMethod.POST)
-    public @ResponseBody
-    Roots calculate(@RequestBody CoefString coefString) {
+    @PostMapping(value = "/calculate")
+    @ResponseBody
+    public Roots calculate(@RequestBody WebApiCoefficients webApiCoefficients) {
         Roots roots = new Roots();
         Coefficients coefficients = null;
         try {
-            coefficients = validationService.validateAndGetCoefficients(coefString);
+            coefficients = validationService.validateAndGetCoefficients(webApiCoefficients);
             roots = CalcRoots.calcRoots(coefficients);
         } catch (BusinessException e) {
             roots.setError(e.getMessage());
@@ -50,9 +47,9 @@ public class MainController {
         return roots;
     }
 
-    @RequestMapping(value = "/showPreviewEquations", method = RequestMethod.GET)
-    public @ResponseBody
-    List<String> showPreviewEquations() {
+    @GetMapping(value = "/showPreviewEquations")
+    @ResponseBody
+    public List<String> showPreviewEquations() {
         List<String> responses = new ArrayList<>();
         for (Equation e : equationService.getAllEquations()) {
             responses.add(e.toString());

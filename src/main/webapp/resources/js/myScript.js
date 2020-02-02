@@ -5,7 +5,7 @@ $(document).ready(function () {
             return false;
         }
     );
-    $("#show_list").click(
+    $("#show_list_button").click(
         function () {
             showEquationsList('showPreviewEquations')
             return false;
@@ -19,7 +19,7 @@ function showEquationsList(url) {
         type: "get", //метод отправки
         dataType: "json", //формат данных
         success: function (response) {
-            var elem = document.getElementById("show_list");
+            var elem = document.getElementById("show_list_button");
             $('#result_list_form').html('');//убираю предыдущий результат
             if (elem.value == "Просмотреть предыдущие рассчеты") {
                 elem.value = "Скрыть предыдущие рассчеты";
@@ -72,7 +72,7 @@ function calculateForm(url) {
                 message = response.error;
             } else {
                 message = 'Корни: x1 ' + response.x1 + ', x2 ' + response.x2;
-                if (document.getElementById("show_list").value == "Скрыть предыдущие рассчеты")
+                if (document.getElementById("show_list_button").value == "Скрыть предыдущие рассчеты")
                     updateEquationsList('showPreviewEquations');
             }
             $('#result_form').html(message);

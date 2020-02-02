@@ -1,19 +1,13 @@
-package com.reneuby.domain;
+package com.reneuby.webapi;
 
 import java.io.Serializable;
 
-public class CoefString implements Serializable {
+public class WebApiCoefficients implements Serializable {
     private String a;
     private String b;
     private String c;
 
-    public CoefString() {
-    }
-
-    public CoefString(String a, String b, String c) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
+    public WebApiCoefficients() {
     }
 
     public String getA() {
