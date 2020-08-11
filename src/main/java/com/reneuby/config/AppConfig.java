@@ -1,8 +1,10 @@
 package com.reneuby.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
@@ -22,6 +24,12 @@ import java.util.Map;
 @EnableTransactionManagement
 public class AppConfig implements WebMvcConfigurer {
 
+    private static final String DEFAULT_URL = "mysql-database-calc.cs1bbzp1i9yv.eu-west-3.rds.amazonaws.com";//--url
+    private static final String DEFAULT_PORT = "3306";//--port
+    private static final String DEFAULT_DBNAME = "calc";//--dbname
+    private static final String DEFAULT_USERNAME = "admin";//--u
+    private static final String DEFAULT_PASSWORD = "rrrrr12345678";//--p
+
     @Bean
     public ViewResolver getInternalResourceViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -39,12 +47,22 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSource(@Autowired Environment environment) {
+        String URL = environment.getProperty("url");
+        URL = URL == null ? DEFAULT_URL : URL;
+        String PORT = environment.getProperty("port");
+        PORT = PORT == null ? DEFAULT_PORT : PORT;
+        String DBNAME = environment.getProperty("dbname");
+        DBNAME = DBNAME == null ? DEFAULT_DBNAME : DBNAME;
+        String USERNAME = environment.getProperty("u");
+        USERNAME = USERNAME == null ? DEFAULT_USERNAME : USERNAME;
+        String PASSWORD = environment.getProperty("p");
+        PASSWORD = PASSWORD == null ? DEFAULT_PASSWORD : PASSWORD;
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        basicDataSource.setUrl("jdbc:mysql://localhost:3306/calc");
-        basicDataSource.setUsername("user");
-        basicDataSource.setPassword("user");
+        basicDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        basicDataSource.setUrl("jdbc:mysql://"+ URL +":"+PORT+"/"+DBNAME);
+        basicDataSource.setUsername(USERNAME);
+        basicDataSource.setPassword(PASSWORD);
         return basicDataSource;
     }
 
