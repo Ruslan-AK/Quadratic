@@ -2,12 +2,12 @@ package com.reneuby.webapi;
 
 import java.io.Serializable;
 
-public class WebApiCoefficients implements Serializable {
+public class WebApiCoeff implements Serializable {
     private String a;
     private String b;
     private String c;
 
-    public WebApiCoefficients() {
+    public WebApiCoeff() {
     }
 
     public String getA() {

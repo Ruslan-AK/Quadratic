@@ -1,6 +1,6 @@
 package com.reneuby.controllers;
 
-import com.reneuby.webapi.WebApiCoefficients;
+import com.reneuby.webapi.WebApiCoeff;
 import com.reneuby.domain.Coefficients;
 import com.reneuby.domain.Equation;
 import com.reneuby.domain.Roots;
@@ -33,11 +33,11 @@ public class MainController {
 
     @PostMapping(value = "/calculate")
     @ResponseBody
-    public Roots calculate(@RequestBody WebApiCoefficients webApiCoefficients) {
+    public Roots calculate(@RequestBody WebApiCoeff webApiCoeff) {
         Roots roots = new Roots();
         Coefficients coefficients = null;
         try {
-            coefficients = validationService.validateAndGetCoefficients(webApiCoefficients);
+            coefficients = validationService.validateAndGetCoefficients(webApiCoeff);
             roots = CalcRoots.calcRoots(coefficients);
         } catch (BusinessException e) {
             roots.setError(e.getMessage());

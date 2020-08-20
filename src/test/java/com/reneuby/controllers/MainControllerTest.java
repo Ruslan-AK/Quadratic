@@ -1,6 +1,6 @@
 package com.reneuby.controllers;
 
-import com.reneuby.webapi.WebApiCoefficients;
+import com.reneuby.webapi.WebApiCoeff;
 import com.reneuby.domain.Coefficients;
 import com.reneuby.domain.Equation;
 import com.reneuby.domain.Roots;
@@ -24,7 +24,7 @@ public class MainControllerTest {
 
     @Test
     public void createEquationRightParameters() {
-        WebApiCoefficients coefficients = new WebApiCoefficients();
+        WebApiCoeff coefficients = new WebApiCoeff();
         coefficients.setA("2");
         coefficients.setB("3");
         coefficients.setC("-9");
@@ -36,7 +36,7 @@ public class MainControllerTest {
 
     @Test
     public void createEquationWrongParameters() {
-        WebApiCoefficients coefficients = new WebApiCoefficients();
+        WebApiCoeff coefficients = new WebApiCoeff();
         coefficients.setA("2");
         coefficients.setB("3");
         coefficients.setC("9");
@@ -48,7 +48,7 @@ public class MainControllerTest {
 
     @Test
     public void saveEquationIfRightCoeff() {
-        WebApiCoefficients coefficients = new WebApiCoefficients();
+        WebApiCoeff coefficients = new WebApiCoeff();
         coefficients.setA("2");
         coefficients.setB("3");
         coefficients.setC("-9");
@@ -61,7 +61,7 @@ public class MainControllerTest {
 
     @Test
     public void dontSaveEquationIfWrongCoeff() {
-        WebApiCoefficients coefficients = new WebApiCoefficients();
+        WebApiCoeff coefficients = new WebApiCoeff();
         coefficients.setA("2");
         coefficients.setB("3");
         coefficients.setC("9");
