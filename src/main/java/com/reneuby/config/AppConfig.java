@@ -24,7 +24,7 @@ import java.util.Map;
 @EnableTransactionManagement
 public class AppConfig implements WebMvcConfigurer {
 
-    private static final String DEFAULT_URL = "mysql";//--url
+    private static final String DEFAULT_URL = "localhost";//--url
 //    private static final String DEFAULT_URL = "mysql-database-calc.cs1bbzp1i9yv.eu-west-3.rds.amazonaws.com";//--url
     private static final String DEFAULT_PORT = "3306";//--port
     private static final String DEFAULT_DBNAME = "calc";//--dbname
