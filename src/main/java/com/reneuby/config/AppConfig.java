@@ -24,11 +24,12 @@ import java.util.Map;
 @EnableTransactionManagement
 public class AppConfig implements WebMvcConfigurer {
 
-    private static final String DEFAULT_URL = "mysql-database-calc.cs1bbzp1i9yv.eu-west-3.rds.amazonaws.com";//--url
+    private static final String DEFAULT_URL = "mysql";//--url
+//    private static final String DEFAULT_URL = "mysql-database-calc.cs1bbzp1i9yv.eu-west-3.rds.amazonaws.com";//--url
     private static final String DEFAULT_PORT = "3306";//--port
     private static final String DEFAULT_DBNAME = "calc";//--dbname
-    private static final String DEFAULT_USERNAME = "admin";//--u
-    private static final String DEFAULT_PASSWORD = "rrrrr12345678";//--p
+    private static final String DEFAULT_USERNAME = "root";//--u
+    private static final String DEFAULT_PASSWORD = "pass";//--p
 
     @Bean
     public ViewResolver getInternalResourceViewResolver() {
@@ -48,15 +49,15 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Bean
     public DataSource dataSource(@Autowired Environment environment) {
-        String URL = environment.getProperty("url");
+        String URL = environment.getProperty("project.quadratic.jdbc.url");
         URL = URL == null ? DEFAULT_URL : URL;
-        String PORT = environment.getProperty("port");
+        String PORT = environment.getProperty("project.quadratic.jdbc.port");
         PORT = PORT == null ? DEFAULT_PORT : PORT;
-        String DBNAME = environment.getProperty("dbname");
+        String DBNAME = environment.getProperty("project.quadratic.jdbc.dbname");
         DBNAME = DBNAME == null ? DEFAULT_DBNAME : DBNAME;
-        String USERNAME = environment.getProperty("u");
+        String USERNAME = environment.getProperty("project.quadratic.jdbc.user");
         USERNAME = USERNAME == null ? DEFAULT_USERNAME : USERNAME;
-        String PASSWORD = environment.getProperty("p");
+        String PASSWORD = environment.getProperty("project.quadratic.jdbc.password");
         PASSWORD = PASSWORD == null ? DEFAULT_PASSWORD : PASSWORD;
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
