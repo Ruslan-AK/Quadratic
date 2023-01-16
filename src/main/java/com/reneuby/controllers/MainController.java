@@ -9,6 +9,7 @@ import com.reneuby.logic.CalcRoots;
 import com.reneuby.services.EquationService;
 import com.reneuby.validators.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class MainController {
     private EquationService equationService;
     private ValidationService validationService;
@@ -27,12 +29,14 @@ public class MainController {
     }
 
     @GetMapping(value = "/")
+    @PreAuthorize("hasRole('USER')")
     public String getPage() {
         return "index";
     }
 
     @PostMapping(value = "/calculate")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public Roots calculate(@RequestBody WebApiCoeff webApiCoeff) {
         Roots roots = new Roots();
         Coefficients coefficients = null;
@@ -49,6 +53,7 @@ public class MainController {
 
     @GetMapping(value = "/showPreviewEquations")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public List<String> showPreviewEquations() {
         List<String> responses = new ArrayList<>();
         for (Equation e : equationService.getAllEquations()) {

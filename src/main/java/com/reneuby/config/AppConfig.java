@@ -73,7 +73,7 @@ public class AppConfig implements WebMvcConfigurer {
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactory.setJpaDialect(new HibernateJpaDialect());
-        entityManagerFactory.setPackagesToScan("com.reneuby.domain");
+        entityManagerFactory.setPackagesToScan("com.reneuby.domain","com.reneuby.security.model");
         entityManagerFactory.setJpaPropertyMap(hibernateJpaProperties());
         return entityManagerFactory;
     }
