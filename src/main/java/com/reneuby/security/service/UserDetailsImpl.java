@@ -5,6 +5,7 @@ import com.reneuby.security.model.User;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -24,7 +25,7 @@ public class UserDetailsImpl implements UserDetails {
 
     public static UserDetailsImpl build(User user) {
         Collection<? extends GrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> (GrantedAuthority) () -> role.getRole().toString())
+                .map(role -> new SimpleGrantedAuthority(role.getRole().toString()))
                 .collect(Collectors.toList());
         return new UserDetailsImpl(user.getId(), user.getName(), user.getEmail(), user.getPass(), authorities);
     }

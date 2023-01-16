@@ -1,6 +1,6 @@
 package com.reneuby.security.model.enums;
 
 public enum RolesEnum {
-    USER,
-    ADMIN
+    ROLE_USER,
+    ROLE_ADMIN
 }
