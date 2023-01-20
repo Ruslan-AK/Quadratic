@@ -80,10 +80,9 @@ public class AppConfig implements WebMvcConfigurer {
 
     private Map<String, String> hibernateJpaProperties() {
         HashMap<String, String> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto", "create-drop");
+        properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
-        properties.put("hibernate.hbm2ddl.import_files", "insert-data.sql");
         return properties;
     }
 }

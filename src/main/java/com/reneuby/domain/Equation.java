@@ -14,7 +14,7 @@ public class Equation implements Serializable {
     @GenericGenerator(name = "increment", strategy = "increment")
     private long id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Coefficients coefficients;
 
     @Override
@@ -22,7 +22,7 @@ public class Equation implements Serializable {
         return "Расчет №" + id + " " + coefficients + " " + roots;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Roots roots;
 
     public Equation() {

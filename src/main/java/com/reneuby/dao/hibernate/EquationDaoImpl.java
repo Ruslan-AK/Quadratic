@@ -22,7 +22,9 @@ public class EquationDaoImpl implements EquationDao {
     }
 
     public List<Equation> getAllEquations() {
-        return manager.createQuery("SELECT e FROM Equation e").getResultList();
+        return manager.createQuery("Select e from Equation e " +
+                "LEFT JOIN FETCH e.coefficients " +
+                "LEFT JOIN FETCH e.roots").getResultList();
     }
 
     public void deleteEquation(long id) {
