@@ -1,5 +1,6 @@
 package com.reneuby.domain;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,6 +9,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "EQUATION")
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Equation implements Serializable {
     @Id
     @GeneratedValue(generator = "increment")
@@ -15,6 +18,7 @@ public class Equation implements Serializable {
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Coefficients coefficients;
 
     @Override
@@ -23,6 +27,7 @@ public class Equation implements Serializable {
     }
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Roots roots;
 
     public Equation() {
